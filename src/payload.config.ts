@@ -7,6 +7,8 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Permissions } from './collections/Permissions'
+import { Inventory } from './collections/Inventory'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -18,15 +20,18 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Permissions, Inventory],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URL || '',
+    url: process.env.DATABASE_URI || 'mongodb+srv://gonzalo_dev:nikefootball888@cluster0.b9dk2cf.mongodb.net/?appName=Cluster0',
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    // Hemos quitado los plugins que daban error.
+    // Payload usará almacenamiento local automáticamente para las fotos.
+  ],
 })

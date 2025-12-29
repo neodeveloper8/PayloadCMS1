@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    permissions: Permission;
+    inventory: Inventory;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +80,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    permissions: PermissionsSelect<false> | PermissionsSelect<true>;
+    inventory: InventorySelect<false> | InventorySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -122,6 +126,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -161,6 +166,49 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "permissions".
+ */
+export interface Permission {
+  id: string;
+  relatedUser: string | User;
+  inventory_module?: {
+    canRead?: boolean | null;
+    canCreate?: boolean | null;
+    canUpdate?: boolean | null;
+    canDelete?: boolean | null;
+  };
+  sales_module?: {
+    canRead?: boolean | null;
+    canCreate?: boolean | null;
+    canUpdate?: boolean | null;
+    canDelete?: boolean | null;
+  };
+  collections_module?: {
+    canRead?: boolean | null;
+    canCreate?: boolean | null;
+    canUpdate?: boolean | null;
+    canDelete?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inventory".
+ */
+export interface Inventory {
+  id: string;
+  name: string;
+  description?: string | null;
+  sku: string;
+  price: number;
+  stock: number;
+  image?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -190,6 +238,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'permissions';
+        value: string | Permission;
+      } | null)
+    | ({
+        relationTo: 'inventory';
+        value: string | Inventory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -238,6 +294,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -272,6 +329,53 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "permissions_select".
+ */
+export interface PermissionsSelect<T extends boolean = true> {
+  relatedUser?: T;
+  inventory_module?:
+    | T
+    | {
+        canRead?: T;
+        canCreate?: T;
+        canUpdate?: T;
+        canDelete?: T;
+      };
+  sales_module?:
+    | T
+    | {
+        canRead?: T;
+        canCreate?: T;
+        canUpdate?: T;
+        canDelete?: T;
+      };
+  collections_module?:
+    | T
+    | {
+        canRead?: T;
+        canCreate?: T;
+        canUpdate?: T;
+        canDelete?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inventory_select".
+ */
+export interface InventorySelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  sku?: T;
+  price?: T;
+  stock?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
