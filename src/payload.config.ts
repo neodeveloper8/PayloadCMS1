@@ -27,7 +27,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || 'mongodb+srv://gonzalo_dev:nikefootball888@cluster0.b9dk2cf.mongodb.net/?appName=Cluster0',
+    url: process.env.DATABASE_URI || '', // Colocar aqui la URI de MongoDB
   }),
   sharp,
   plugins: [
