@@ -57,7 +57,8 @@ Este proyecto es una aplicación Full Stack para la gestión de inventario con c
 Para facilitar la revisión, puedes usar estos usuarios (o crear los tuyos en la BD):
 
 - **Admin:** `gonzaloast8@gmail.com` / (Tu contraseña)
-- **User (Sin permisos):** `alonso@gmail.com` / (Tu contraseña)
+- **User1 (Permisos limitados):** `alonso@gmail.com` / (123456)
+- **User2 (Permisos limitados):** `employer@gmail.com` / (654321)
 
 ---
 Desarrollado por **Gonzalo Sierra**.
