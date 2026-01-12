@@ -3,7 +3,7 @@ import config from '@payload-config'
 import { getMe } from '@/lib/getMe'
 import { redirect } from 'next/navigation'
 import EditInventoryClient from './EditInventoryClient'
-
+import Link from 'next/link'
 export default async function EditPage({ params }: { params: { id: string } }) {
   
   const { id } = await params 
@@ -32,7 +32,7 @@ export default async function EditPage({ params }: { params: { id: string } }) {
       <div className="min-h-screen bg-black text-white p-8 flex flex-col items-center justify-center">
         <h1 className="text-3xl text-red-500 font-bold mb-4">🚫 Sin Permisos</h1>
         <p>No tienes autorización para editar productos.</p>
-        <a href="/inventario" className="mt-4 text-blue-400 underline">Volver al inventario</a>
+        <Link href="/inventario" className="mt-4 text-blue-400 underline">Volver al inventario</Link>
       </div>
     )
   }
